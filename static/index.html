@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Instagram Auto-Poster</title>
+  <script src="script.js" defer></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <h1 class="text-2xl mb-6 text-center font-bold">Post Text to Instagram</h1>
+    <form id="postForm" class="flex flex-col gap-4">
+      <input type="text" id="usernameInput" class="border p-2" placeholder="Instagram Username" required />
+      <input type="password" id="passwordInput" class="border p-2" placeholder="Instagram Password" required />
+      <textarea id="textInput" class="border p-2" placeholder="Enter text to generate image..." required></textarea>
+      <textarea id="captionInput" class="border p-2" placeholder="Enter caption for post..." required></textarea>
+      <input type="password" id="tokenInput" class="border p-2" placeholder="API Token..." required />
+      <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Post</button>
+    </form>
+    <div id="response" class="mt-4 text-center"></div>
+  </div>
+</body>
+</html>
