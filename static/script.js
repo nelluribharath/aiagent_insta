@@ -1,7 +1,9 @@
 const form = document.getElementById('postForm');
 const responseDiv = document.getElementById('response');
 
-const API_ENDPOINT = "http://localhost:8000/post_to_instagram/";
+//const API_ENDPOINT = "http://localhost:8000/post_to_instagram/";
+//const API_ENDPOINT = "https://0d97-2401-4900-883a-7cfd-a813-8e1c-497f-3417.ngrok-free.app/?"
+const API_ENDPOINT = "https://0d97-2401-4900-883a-7cfd-a813-8e1c-497f-3417.ngrok-free.app/post_to_instagram/"
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();

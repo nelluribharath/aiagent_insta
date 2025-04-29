@@ -1,7 +1,10 @@
 from fastapi import FastAPI, Form, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from .agent import InstagramAgent, generate_image_from_text
+
+from app.agent import InstagramAgent
+from app.utils.image_creator import create_image_from_text
+
 import os
 import uuid
 
@@ -13,7 +16,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-SECRET_TOKEN = "MY_SUPER_SECRET_TOKEN"
+SECRET_TOKEN = "Agent007"
 
 @app.get("/")
 def get_index():
@@ -31,12 +34,26 @@ async def post_to_instagram(
         raise HTTPException(status_code=401, detail="Invalid token")
 
     try:
+        print("[INFO] Received submission with text:", text)
+
+        if not text:
+            print("[ERROR] No text received!")
+            return {"status": "error", "message": "No text provided"}
+
         temp_filename = f"{UPLOAD_DIR}/{uuid.uuid4().hex}.png"
-        generate_image_from_text(text, temp_filename)
+        print(f"[INFO] About to generate image at: {temp_filename}")
+
+        create_image_from_text(text, temp_filename)
+        print("[INFO] Image generated successfully.")
 
         result = agent.post_photo(username, password, temp_filename, caption)
-        os.remove(temp_filename)
+        print("[INFO] Instagram post result:", result)
 
-        return {"status": "success", "message": result}
+        os.remove(temp_filename)
+        print("[INFO] Temporary file removed.")
+
+        return {"status": "success", "message": "Posted successfully"}
+
     except Exception as e:
+        print(f"[ERROR] Unhandled exception: {e}")
         return {"status": "error", "message": str(e)}
